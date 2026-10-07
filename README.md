@@ -75,7 +75,7 @@ sequenceDiagram
     S-->>C: Private records
     C->>C: Check completeness and recompute accounting
     C-->>V: Certificate summary and digest
-    Note over V,R: Demo: simulator write is dry-run; verifier relays via MockForwarder
+    Note over V,R: Demo write is dry-run<br/>Verifier relays via MockForwarder
     V->>R: Record digest-bound receipt
     V->>M: Submit hash of delivered certificate
     V-->>B: Certificate, receipt and payment status
