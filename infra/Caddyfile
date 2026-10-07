@@ -1,0 +1,19 @@
+# Public HTTPS (Let's Encrypt) for the demo, buyer API, MIP-003 agent surface and the source's public/private endpoints.
+# Admin/dev routes of the source and the Masumi admin UI are NOT exposed.
+{$DOMAIN} {
+	handle /agent/* {
+		uri strip_prefix /agent
+		reverse_proxy verifier:4200
+	}
+	handle /source/public/* {
+		uri strip_prefix /source
+		reverse_proxy source:4100
+	}
+	handle /source/private/* {
+		uri strip_prefix /source
+		reverse_proxy source:4100
+	}
+	handle {
+		reverse_proxy buyer:4300
+	}
+}

@@ -1,0 +1,28 @@
+{
+  "name": "proofdesk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "bots:run": "tsx scripts/run-bots.ts",
+    "accounting:check": "tsx scripts/check-accounting.ts",
+    "source": "tsx services/source/src/server.ts",
+    "verifier": "tsx services/verifier/src/server.ts",
+    "buyer": "tsx agents/buyer/src/server.ts",
+    "dev": "tsx scripts/dev-all.ts"
+  },
+  "dependencies": {
+    "fastify": "5.3.3",
+    "viem": "2.34.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.3",
+    "tsx": "4.19.4",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
+  }
+}

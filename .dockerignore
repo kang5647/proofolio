@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+!.env.example
+data
+vendor
+node_modules
+workflows/.env
+workflows/.env.*
+workflows/**/node_modules
+contracts/out
+contracts/cache
+contracts/broadcast
+*.log

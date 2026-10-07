@@ -1,0 +1,62 @@
+{
+  "requestId": "0x61336f89b1cb1cb1dba7656c742e51a0085056b53dc0a5da487955ccf636a0ae",
+  "commitTx": "0xcbdef60283824563debe9dcb7c0f1567372015484cf7f3dd3f6f934f78ccb42a",
+  "certificate": {
+    "version": "proofdesk-cert/1",
+    "requestId": "0x61336f89b1cb1cb1dba7656c742e51a0085056b53dc0a5da487955ccf636a0ae",
+    "buyer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "accountCommitment": "0x39984df3a6b9f684fd078008accb32e015b5ea8d8dbebd5c85187c3926dc5c4d",
+    "runId": "run-bot-a-demo",
+    "market": "SIM-SOL/USDT",
+    "intervalStart": "2026-10-01T00:00:00.000Z",
+    "intervalEnd": "2026-10-01T10:40:00.000Z",
+    "methodologyVersion": "proofdesk-accounting/1.0.0",
+    "nonce": "0xdbeccd6f83f9c0227caede5218d09622db759c440f8f581b46e3a133369b3d18",
+    "issuedAt": "2026-10-06T13:31:35.318Z",
+    "expiresAt": "2026-10-07T13:31:23.000Z",
+    "sourceAsOf": "2026-10-06T13:16:56.054Z",
+    "dataProvenance": "simulated-market",
+    "executionMode": "local-simulation",
+    "executionEngine": "cre-simulate",
+    "status": "VERIFIED",
+    "reasons": [],
+    "recordCount": 72,
+    "completeness": "complete",
+    "boundaryStatus": {
+      "startFlat": true,
+      "endFlat": true
+    },
+    "result": {
+      "grossRealizedPnl": "280.76330100",
+      "totalCommissions": "280.28032114",
+      "netRealizedPnl": "0.48297986",
+      "fillCount": 70,
+      "completedRoundTrips": 35,
+      "forcedCloses": 0,
+      "startingQuote": "10000.00000000",
+      "endingQuote": "10000.48297986",
+      "largestGrossWinningRoundTrip": {
+        "gross": "603.80529000",
+        "openedEventId": "run-bot-a-demo:109:9",
+        "closedEventId": "run-bot-a-demo:167:10"
+      },
+      "funding": "not-applicable",
+      "reconciliation": "ok"
+    },
+    "limitations": [
+      "All prices, fills and balances come from a synthetic simulated market (SIM-SOL/USDT); nothing was executed on an exchange.",
+      "Authentication proves access to the ProofDesk demo source, not genuine exchange performance.",
+      "The service operator runs the simulator and can inspect its ledger; this is a demo trust boundary, not production privacy.",
+      "Only scoped realised PnL is certified. No ROI, Sharpe, drawdown or account-level performance is computed.",
+      "Funding is not applicable to this spot-only simulation.",
+      "Execution mode is local-simulation: the CRE simulator is not a real TEE and has no DON consensus."
+    ]
+  },
+  "certificateDigest": "0x0eae8fbb1da0cd0a9b6edf3e4c99070f0f2923174f0e2a42898be65c6c5a6501",
+  "receipt": {
+    "txHash": null,
+    "txStatus": "SUCCESS",
+    "receiverStatus": 0
+  },
+  "note": "LOCAL SIMULATION: anvil chain id 11155111, cre workflow simulate dry run (no --broadcast)"
+}

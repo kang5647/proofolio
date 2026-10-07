@@ -1,0 +1,36 @@
+# ==========================================================================
+# CRE WORKFLOW SETTINGS FILE — ProofDesk trading-resume
+# ==========================================================================
+# local-settings:   anvil (chain id 31337, MockForwarder) + local source on :4100. Local simulation only.
+# staging-settings: Ethereum Sepolia (real KeystoneForwarder) + source URL from config.staging.json.
+local-settings:
+  user-workflow:
+    workflow-name: "proofdesk-resume-local"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.local.json"
+    secrets-path: "../secrets.yaml"
+
+docker-settings:
+  user-workflow:
+    workflow-name: "proofdesk-resume-docker"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.docker.json"
+    secrets-path: "../secrets.yaml"
+
+staging-settings:
+  user-workflow:
+    workflow-name: "proofdesk-resume-staging"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.staging.json"
+    secrets-path: "../secrets.yaml"
+
+production-settings:
+  user-workflow:
+    workflow-name: "proofdesk-resume-production"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.production.json"
+    secrets-path: "../secrets.yaml"

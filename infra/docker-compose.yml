@@ -1,0 +1,90 @@
+# ProofDesk — local Docker Compose (also used on the EC2 host).
+# Profiles:
+#   default        source + verifier + buyer (+ caddy for TLS when DOMAIN is set)
+#   masumi         adds Masumi Payment Service + Postgres (set PAYMENT_MODE=masumi)
+#   localchain     adds anvil (chain id 11155111) for a fully local run without Sepolia
+# Secrets come from ../.env (names in ../.env.example). Admin/payment-service UIs bind to localhost only.
+name: proofdesk
+services:
+  source:
+    build: { context: .., dockerfile: infra/Dockerfile }
+    command: ["npx", "tsx", "services/source/src/server.ts"]
+    env_file: ../.env
+    environment: { HOST: 0.0.0.0, DATA_DIR: /data }
+    volumes: [ "proofdesk-data:/data" ]
+    ports: [ "127.0.0.1:4100:4100" ]
+    restart: unless-stopped
+
+  verifier:
+    build: { context: .., dockerfile: infra/Dockerfile }
+    command: ["npx", "tsx", "services/verifier/src/server.ts"]
+    env_file: ../.env
+    environment:
+      HOST: 0.0.0.0
+      DATA_DIR: /data
+      SOURCE_BASE_URL: http://source:4100
+      CRE_PROJECT_DIR: /app/workflows
+      CRE_ENV_FILE: /data/cre.env
+      MASUMI_PAYMENT_SERVICE_URL: ${MASUMI_PAYMENT_SERVICE_URL:-http://masumi-payment:3001/api/v1}
+    volumes:
+      - "proofdesk-data:/data"
+      - "${HOME}/.cre:/root/.cre"
+    ports: [ "127.0.0.1:4200:4200" ]
+    depends_on: [ source ]
+    restart: unless-stopped
+
+  buyer:
+    build: { context: .., dockerfile: infra/Dockerfile }
+    command: ["npx", "tsx", "agents/buyer/src/server.ts"]
+    env_file: ../.env
+    environment:
+      HOST: 0.0.0.0
+      DATA_DIR: /data
+      SOURCE_BASE_URL: http://source:4100
+      VERIFIER_BASE_URL: http://verifier:4200
+      BUYER_MASUMI_PAYMENT_SERVICE_URL: ${MASUMI_PAYMENT_SERVICE_URL:-http://masumi-payment:3001/api/v1}
+    volumes: [ "proofdesk-data:/data" ]
+    ports: [ "127.0.0.1:4300:4300" ]
+    depends_on: [ verifier ]
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2.9-alpine
+    profiles: [ "tls" ]
+    environment: { DOMAIN: "${DOMAIN}" }
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    ports: [ "80:80", "443:443" ]
+    depends_on: [ buyer, verifier, source ]
+    restart: unless-stopped
+
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:stable
+    profiles: [ "localchain" ]
+    command: ["anvil --host 0.0.0.0 --chain-id 11155111 --block-time 1 --slots-in-an-epoch 1"]
+    ports: [ "127.0.0.1:8545:8545" ]
+
+  masumi-db:
+    image: postgres:16-alpine
+    profiles: [ "masumi" ]
+    environment: { POSTGRES_USER: masumi, POSTGRES_PASSWORD: "${MASUMI_DB_PASSWORD:-masumi}", POSTGRES_DB: masumi }
+    volumes: [ "masumi-db:/var/lib/postgresql/data" ]
+    ports: [ "127.0.0.1:5433:5432" ]   # host-side migrate/seed only
+    restart: unless-stopped
+
+  masumi-payment:
+    build: { context: ../vendor/masumi-payment-service }
+    profiles: [ "masumi" ]
+    env_file: ../vendor/masumi.env
+    environment:
+      DATABASE_URL: postgresql://masumi:${MASUMI_DB_PASSWORD:-masumi}@masumi-db:5432/masumi?schema=public
+      PORT: 3001
+    ports: [ "127.0.0.1:3001:3001" ]   # admin UI/API private; never exposed publicly
+    depends_on: [ masumi-db ]
+    restart: unless-stopped
+
+volumes:
+  proofdesk-data: {}
+  caddy-data: {}
+  masumi-db: {}

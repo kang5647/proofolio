@@ -1,0 +1,22 @@
+# ==========================================================================
+# CRE PROJECT SETTINGS FILE — ProofDesk
+# ==========================================================================
+local-settings:
+  rpcs:
+    - chain-name: ethereum-testnet-sepolia
+      url: http://127.0.0.1:8545
+
+docker-settings:
+  rpcs:
+    - chain-name: ethereum-testnet-sepolia
+      url: http://anvil:8545
+
+staging-settings:
+  rpcs:
+    - chain-name: ethereum-testnet-sepolia
+      url: https://ethereum-sepolia-rpc.publicnode.com
+
+production-settings:
+  rpcs:
+    - chain-name: ethereum-testnet-sepolia
+      url: https://ethereum-sepolia-rpc.publicnode.com
