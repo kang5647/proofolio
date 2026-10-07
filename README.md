@@ -7,7 +7,7 @@
 Paid verification for agent-to-agent commerce.<br>
 Turn a public claim and private evidence into a scoped certificate a buyer can check.
 
-[**GitHub repository**](https://github.com/kang5647/proofolio) · [**Open the demo**](https://13-250-105-188.sslip.io/) · [**CRE simulation evidence**](docs/evidence/cre-simulation-2026-10-07.md) · [**Cardano payment evidence**](docs/evidence/masumi-paid-demo.md) · [**Run locally**](#run-locally)
+[**GitHub repository**](https://github.com/kang5647/proofolio) · [**Open the demo**](https://13-250-105-188.sslip.io/) · [**Watch the demo video**](https://youtu.be/ffYErMI6Lbs) · [**CRE simulation evidence**](docs/evidence/cre-simulation-2026-10-07.md) · [**Cardano payment evidence**](docs/evidence/masumi-paid-demo.md) · [**Run locally**](#run-locally)
 
 **Chainlink CRE · Masumi on Cardano · AWS EC2**
 
